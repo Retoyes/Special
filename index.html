@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+
+<audio id="bg-music" loop>
+    <source src="Yellow Magic Orchestra-Tong Poo.mp3" type="audio/mpeg">
+</audio>
+
+<div id="music-player">
+    <button id="music-btn">▶</button>
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01">
+</div>
+
+<script>
+const music = document.getElementById("bg-music");
+const btn = document.getElementById("music-btn");
+const slider = document.getElementById("volume-slider");
+
+// 🔊 Загружаем сохранённые настройки
+let savedVolume = localStorage.getItem("volume");
+let isPlaying = localStorage.getItem("isPlaying") === "true";
+
+music.volume = savedVolume ? savedVolume : 0.15;
+slider.value = music.volume;
+
+// ▶ Автовоспроизведение если было включено
+if (isPlaying) {
+    music.play();
+    btn.textContent = "⏸";
+} else {
+    btn.textContent = "▶";
+}
+
+// 🎵 Кнопка
+btn.addEventListener("click", () => {
+    if (music.paused) {
+        music.play();
+        btn.textContent = "⏸";
+        localStorage.setItem("isPlaying", "true");
+    } else {
+        music.pause();
+        btn.textContent = "▶";
+        localStorage.setItem("isPlaying", "false");
+    }
+});
+
+// 🎚 Ползунок громкости
+slider.addEventListener("input", () => {
+    music.volume = slider.value;
+    localStorage.setItem("volume", slider.value);
+});
+</script>
+
+<head>
+    <title>Моя перша сторінка</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div id="wrapper">
+
+    <div id="header">
+        <div class="text_header">Моя сторінка</div>
+    </div>
+
+    <div id="menu">
+        <ul>
+            <li><a href="index.html">Головна</a></li>
+            <li><a href="schedule.html">Розклад занять</a></li>
+            <li><a href="our_class.html">Наш клас</a></li>
+            <li><a href="video.html">Відео</a></li>
+            <li><a href="music.html">Музика</a></li>
+            <li><a href="contacts.html">Контакти</a></li>
+        </ul>
+    </div>
+
+    <div id="content">
+        <h1>Головна сторінка</h1>
+        <p>Ласкаво просимо на мій сайт!</p>
+    </div>
+
+    <div id="footer">
+        <div class="footer_text">Мій перший сайт</div>
+    </div>
+
+</div>
+</body>
+</html>
